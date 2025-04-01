@@ -4,8 +4,7 @@ import matplotlib.pyplot as plt
 
 start = [0, 0]
 h_fix = 0.0005
-epsilon = 0.001
-iterations = 10000
+
 
 def function_himmelblau(x, y):
     return (x ** 2 + y - 11) ** 2 + (x + y ** 2 - 7) ** 2
@@ -17,19 +16,19 @@ def gradient(x, y):
     return np.array([df_dx, df_dy])
 
 
-def gradient_descent(start, h, epsilon, max_iter):
+def gradient_descent(start, h):
     point = np.array(start, dtype=float)
     path = [point.copy()]  
-    for _ in range(max_iter):
+    for _ in range(10000):
         grad = gradient(point[0], point[1])
-        if np.linalg.norm(grad) < epsilon:
+        if np.linalg.norm(grad) < 0.001:
             break
         point -= h * grad
         path.append(point.copy())  
     return point, np.array(path)
 
 
-min_point, path = gradient_descent(start, h_fix, epsilon, iterations)
+min_point, path = gradient_descent(start, h_fix)
 print(f"Найденный минимум: {np.round(min_point, 4)}")
 
 x = np.linspace(-5, 5, 100)
